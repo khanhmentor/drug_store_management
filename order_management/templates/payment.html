@@ -1,0 +1,108 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+   <title>payment</title>
+{% endblock title %}
+
+{% block content %}
+
+   <div class="payment">
+      <div class="row" style="padding: 30px">
+         <div class="col-75">
+            <div class="form_container">
+               <form method="post" id="payment-form">
+                  {% csrf_token %}
+                  <div class="row">
+                     <div class="col-50">
+                        <h3>Address</h3>
+                        <label for="fname"><i class="fa fa-user"></i> Full Name</label>
+                        <input type="text" id="name" name="name" placeholder="John M. Doe" value="{{ user.0.name }}" required/>
+                        <label for="email"><i class="fa fa-envelope"></i> Email</label>
+                        <input type="text" id="email" name="email" placeholder="john@example.com" value="{{ user.0.email }}" required/>
+                        <label for="adr"><i class="fa fa-address-card-o"></i> Address</label>
+                        <input type="text" id="adr" name="address" placeholder="542 W. 15th Street" required/>
+                        <label for="phone"><i class="fa fa-phone"></i> Phone</label>
+                        <input type="tel" id="phone" name="phone" placeholder="(646) 884-7738" maxlength="13" value="{{ user.0.phone }}" required/>
+
+                        <div class="row">
+                           <div class="col-50">
+                              <label for="state">State</label>
+                              <input type="text" id="state" name="state" placeholder="NY" required/>
+                           </div>
+                           <div class="col-50">
+                              <label for="zip">Zip</label>
+                              <input type="text" id="zip" name="zip" placeholder="10001" value="{{ user.0.zip }}" required/>
+                           </div>
+                        </div>
+                     </div>
+
+                     <div class="col-50">
+                        <h3>Payment</h3>
+                        <label for="fname">Accepted Cards</label>
+                        <div class="icon-container">
+                           <i class="fa fa-cc-visa" style="color: navy"></i>
+                           <i class="fa fa-cc-amex" style="color: blue"></i>
+                           <i class="fa fa-cc-mastercard" style="color: red"></i>
+                           <i class="fa fa-cc-discover" style="color: orange"></i>
+                        </div>
+                        <label for="cname">Name on Card</label>
+                           <input type="text" id="cname" name="cardname" placeholder="John More Doe" required/>
+                        <label for="card-number">Credit card number</label>
+                           <div class="card-element" id="card-number"></div>
+                        <label for="card-exp">Expiration Date</label>
+                           <div class="card-element" id="card-exp"></div>
+
+                        <div class="row">
+                           <div class="col-50">
+                              <label for="card-cvc">CVC</label>
+                                 <div class="card-element" id="card-cvc"></div>
+                           </div>
+                        </div>
+
+                        <div id="card-errors" role="alert"></div>
+                     </div>
+                  </div>
+
+                  {% if messages %}
+                     <div class="alert alert-danger">
+                        {% for message in messages %}
+                        <p>{{ message }}</p>
+                        {% endfor %}
+                     </div>
+                  {% endif %}
+
+                  <input type="submit" value="Continue to checkout" class="checkout_btn" />
+               </form>
+            </div>
+         </div>
+
+         <div class="col-25">
+            <div class="form_container">
+               <h4>
+                  Cart
+                  <span class="price" style="color: black">
+                     <i class="fa fa-shopping-cart"></i>
+                     <b>{{ len }}</b>
+                  </span>
+               </h4>
+               {% for item in items %}
+                  <p><a href="../cart">{{ item.category.name }}</a> <span class="price">{{ item.sub_total_cost }}$</span></p>
+               {% endfor %}
+               <hr />
+               <p>
+                  Total <span class="price" style="color: black"><b>{{ order.total_cost }}$</b></span>
+               </p>
+            </div>
+         </div>
+      </div>
+   </div>
+
+   <script>
+      var address = '{{ user.0.address }}'
+      var len = '{{ len }}'
+
+      var stripe = Stripe('{{ publishable_key }}')
+   </script>
+
+{% endblock %}    

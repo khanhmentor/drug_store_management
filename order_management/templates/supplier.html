@@ -1,0 +1,27 @@
+{% extends "manager-base.html" %}
+{% load static %}
+
+{% block title %}
+   <title>Supplier</title>
+{% endblock title %}
+
+{% block nav %}
+    <a href="../../page/{{ user.username }}/addlink" id="add-pro-link" class="nav-link px-3">
+        <span class="me-2"><i class="bi bi-table"></i></span>
+        <span>Add Product</span>
+    </a>
+{% endblock nav %}
+
+{% block content %}
+
+    <main class="mt-5 pt-3" id="main-content"></main>
+
+
+    <script>
+        var csrf_token = '{{ csrf_token }}';
+        var message = '{{ message }}';
+        var types = '{{ types }}'
+    </script>
+
+{% endblock %}
+

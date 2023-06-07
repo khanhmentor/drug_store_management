@@ -1,0 +1,80 @@
+{% load static %}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <h4>Dashboard</h4>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12 mb-3">
+            <div class="card">
+                <div class="card-header">
+                    <span><i class="bi bi-table me-2"></i></span> Orders
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table id="example" class="table table-striped data-table" style="width: 100%">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Order time</th>
+                                    <th>Is Paid</th>
+                                    <th>Total cost</th>
+                                    <th>Address</th>
+                                    <th style="text-align: center;" colspan="3" scope="colgroup">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for order in orders %}
+                                    <tr>
+                                        <td>{{ order.customer.name }}</td>
+                                        <td>{{ order.order_time }}</td>
+                                        <td>{{ order.is_paid }}</td>
+                                        <td>{{ order.total_cost }}$</td>
+                                        <td>{{ order.customer.address }}</td>
+
+                                        <td>
+                                            {% if order.status.id > 3 %}
+                                                <button style="display:none;">Hidden button</button>
+                                            {% else %}
+                                                <button onclick="window.location.href=window.location.origin+'/page/{{ user.username }}/accept/{{ order.id }}/4'; this.style.display='none';" type="button" class="btn btn-success">Accept</button>
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            {% if order.status.id > 3 %}
+                                                <button style="display:none;">Hidden button</button>
+                                            {% else %}
+                                                <button onclick="window.location.href=window.location.origin+'/page/{{ user.username }}/accept/{{ order.id }}/11'; this.style.display='none';" type="button" class="btn btn-danger">Deny</button>
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            {% if order.status.id > 6 and user.role == 'supplier' %}
+                                                <div style="display:none;">Hidden div</div>
+                                            {% else %}
+                                                <div class="dropdown">
+                                                    <button class="btn btn-secondary dropdown-toggle" type="button"
+                                                        id="dropdownMenuButton" data-toggle="dropdown"
+                                                        aria-haspopup="true" aria-expanded="false">
+                                                        Status
+                                                    </button>
+  
+                                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                        {% for sta in status %}
+                                                            <a class="dropdown-item {% if sta.name == order.status.name %}active{% endif %}" href="../{{ user.username }}/accept/{{ order.id }}/{{ sta.id }}">{{ sta.name }}</a>
+                                                        {% endfor %}
+                                                    </div>                                              
+                                                </div>
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

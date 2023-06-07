@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% load tz %}
+
+{% block title %}
+   <title>Profile</title>
+{% endblock title %}
+
+{% block content %}
+
+    <div class="container">
+        <form method="post" id="edit_profile-form">
+            {% csrf_token %}
+            <div class="container rounded bg-white mt-5 mb-5">
+                <div class="row custom-border">
+                    <div class="col-md-3">
+                        <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img
+                                class="rounded-circle mt-5" width="150px"
+                                src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg">
+                                <span class="font-weight-bold">{{ user.0.name }}</span>
+                                <span class="text-black-50">{{ user.0.email }}</span><span> </span>
+                        </div>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="p-3 py-5">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <h4 class="text-right"><b>Profile</b></h4>
+                            </div>
+                            <div class="row mt-2">
+                                <div class="col-md-6"><label class="labels"><b>Name</b></label>
+                                    <div class="cap"><input type="text" name="name" value="{{ user.0.name }}"/></div>
+                                </div>
+                                <div class="col-md-6"><label class="labels"><b>Class</b></label>
+                                    <div>{% if sum > 500 %}Diamond{% elif sum > 400 %}Gold{% elif sum > 100 %}Silver{% else %}Brone{% endif %}</div>
+                                </div>
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col-md-6"><label class="labels"><b>Phone</b></label>
+                                    <div><input type="text" name="phone" value="{{ user.0.phone }}"/></div>
+                                </div>
+                                <div class="col-md-6"><label class="labels"><b>Role</b></label>
+                                    <div class="cap">{{ user.0.role }}</div>
+                                </div>
+                                <div class="col-md-6"><label class="labels"><b>Address</b></label>
+                                    <div><input type="text" name="address" value="{{ user.0.address }}"/></div>
+                                </div>
+                                <div class="col-md-6"><label class="labels"><b>Zip code</b></label>
+                                    <div><input type="text" name="zip" value="{{ user.0.zip }}"/></div>
+                                </div>
+                                <div class="col-md-6"><label class="labels"><b>Login at</b></label>
+                                    <div>{{ sign_in_time }}</div>
+                                </div>
+                                <div class="col-md-6"><label class="labels"><b>Nearest order</b></label>
+                                    <div>{% if nearest_order_time %}{{ nearest_order_time }}{% else %}Have not order yet!{% endif %}</div>
+                                </div>
+                                <div class="col-md-6"><label class="labels"><b>ID</b></label>
+                                    <div id="uid"></div>
+                                </div>
+                                <div class="col-md-6"><label class="labels"><b>Username</b></label>
+                                    <div>{{ user.0.username }}</div>
+                                </div>
+                                <div class="col-md-6"><label class="labels"><b>Old Password</b></label>
+                                    <div><input type="password" name="o-pass" placeholder="*************" required/></div>
+                                </div>
+                                <div class="col-md-6"><label class="labels"><b>New Password</b></label>
+                                    <div><input type="password" name="n-pass" placeholder="*************"/></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="alert alert-danger"><p></p></div>
+                    <div class="alert alert-success"><p></p></div>
+
+                    <input class="button" type="submit" value="Change"/>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        var uid = '{{ user.0.id }}'
+        var username = '{{ user.0.username }}'
+    </script>
+{% endblock %}

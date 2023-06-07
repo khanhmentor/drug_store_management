@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+   <title>cart</title>
+{% endblock title %}
+
+{% block content %}
+   <div class="container">
+      <div>
+      </div>
+      <div class="row">
+         <div class="Cart-Container">
+            <div class="Header">
+               <h3 class="Heading">Shopping Cart</h3>
+               <h5 class="Action"><a href="../../../page/{{ user.0.username }}/deleteorder/">Remove All</a></h5>
+            </div>
+            {% for item in items %}
+            <div class="Cart-Items" id="{{ item.id }}">
+               <div class="image-box">
+                  <img src="{% static 'images/' %}{{ item.category.photo }}" style="height:120px">
+               </div>
+               
+               <div class="about">
+                  <h1 class="title">{{ item.category.name }}</h1>
+               </div>
+               
+               <div class="counter">
+                  <a href="#" class="qtyplus" id="{{ item.category.quantity }}">+</a>
+                  <div class="count" id="count{{ item.id }}">{{ item.quantity }}</div>
+                  <a href="#" class="qtyminus">-</a>
+               </div>
+               
+               <div class="prices">
+                  <div class="amount">{{ item.sub_total_cost }}$</div>
+                  <div class="remove"><a href="../../../page/{{ user.0.username }}/delete/{{ item.id }}/">Remove</a></div>
+               </div>
+            </div>
+            {% endfor %}
+            <table>
+               <tr>
+                  <td class="p40"></td>
+                  <td class="p60"><hr></td>
+               </tr>
+            </table>
+            <table>
+               <tr>
+                  <td class="p40"></td>
+                  <td class="p60">
+                     <div class="checkout">
+                        <div class="total">
+                           <div>
+                              <div class="Subtotal">Total</div>
+                              <div class="items">{{ len }} items</div>
+                           </div>
+                           
+                           <div class="total-amount">{{ order.total_cost }}$</div>
+                        </div>
+                        <button class="button">Checkout</button>
+                     </div>
+                  </td>
+               </tr>
+            </table>
+            
+         </div>
+      </div>
+   </div>    
+
+   <script>
+      var username = '{{ user.0.username }}'
+      var len = '{{ len }}'
+   </script>
+{% endblock %}

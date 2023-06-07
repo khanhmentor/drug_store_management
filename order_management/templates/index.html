@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+   <title>{{ type.name }}</title>
+{% endblock title %}
+
+{% block content %}
+   
+   <div class="product_section">
+      <div id="main_slider" class="carousel slide" data-ride="carousel">
+         <div class="carousel-inner">
+            <div class="carousel-item active">
+               <div class="container">
+                  <h1 class="product_taital">{{ type.name }}</h1>
+                  <div class="product_section_2">
+                     <div class="row">
+                        {% for item in items %}
+                           <div class="col-lg-4 col-sm-4">
+                              <div class="box_main">
+                                 <h4 class="product_text">{{ item.name }}</h4>
+                                 <p class="price_text">Price  <span style="color: #262626;">{{ item.price }}$</span></p>
+                                 <div class="product_img"><img src="{% static 'images/' %}{{ item.photo }}"></div>
+                                 <div class="btn_main">
+                                    <div class="buy_bt"><a href="../../page/{{ user.0.username }}/{{ item.id }}/1">Buy Now</a></div>
+                                    <div class="seemore_bt" ><a href="../../page/{{ user.0.username }}/product/{{ item.id }}">See More</a></div>
+                                 </div>
+                              </div>
+                           </div>         
+                        {% endfor %}
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <h3>{{ message }}</h3> 
+      </div>
+   </div>
+    
+{% endblock %}
