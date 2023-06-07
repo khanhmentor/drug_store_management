@@ -307,8 +307,9 @@ $(document).ready(function() {
     $('#signin-form').submit(function(e) {
         e.preventDefault();
         var form_data = $(this).serialize(); 
+        var current_url = window.location.href;
         $.ajax({
-            url: '/accounts/login/',
+            url: current_url,
             type: 'POST',
             data: form_data,
             dataType: 'json',
